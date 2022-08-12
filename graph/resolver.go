@@ -9,5 +9,5 @@ import "xcasluw/golang-graphql/graph/model"
 type Resolver struct {
 	Categories []*model.Category
 	Courses    []*model.Course
-	Chapter    []*model.Chapter
+	Chapters   []*model.Chapter
 }

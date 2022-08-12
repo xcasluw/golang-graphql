@@ -32,12 +32,12 @@ func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, erro
 
 // Courses is the resolver for the courses field.
 func (r *queryResolver) Courses(ctx context.Context) ([]*model.Course, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Courses, nil
 }
 
 // Chapters is the resolver for the chapters field.
 func (r *queryResolver) Chapters(ctx context.Context) ([]*model.Chapter, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Chapters, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
