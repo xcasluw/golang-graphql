@@ -6,23 +6,61 @@ package graph
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"xcasluw/golang-graphql/graph/generated"
 	"xcasluw/golang-graphql/graph/model"
 )
 
 // CreateCategory is the resolver for the createCategory field.
 func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategoryInput) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	category := model.Category{
+		ID:          fmt.Sprintf("T%d", rand.Intn(100)),
+		Name:        input.Name,
+		Description: &input.Description,
+	}
+	r.Categories = append(r.Categories, &category)
+	return &category, nil
 }
 
 // CreateCourse is the resolver for the createCourse field.
 func (r *mutationResolver) CreateCourse(ctx context.Context, input model.NewCourseInput) (*model.Course, error) {
-	panic(fmt.Errorf("not implemented"))
+	var category *model.Category
+
+	for _, v := range r.Categories {
+		if v.ID == input.CategoryID {
+			category = v
+		}
+	}
+
+	course := model.Course{
+		ID:          "4",
+		Name:        input.Name,
+		Description: &input.Description,
+		Category:    category,
+	}
+
+	r.Courses = append(r.Courses, &course)
+	return &course, nil
 }
 
 // CreateChapter is the resolver for the createChapter field.
 func (r *mutationResolver) CreateChapter(ctx context.Context, input model.NewChapterInput) (*model.Chapter, error) {
-	panic(fmt.Errorf("not implemented"))
+	var course *model.Course
+
+	for _, v := range r.Courses {
+		if v.ID == input.CourseID {
+			course = v
+		}
+	}
+
+	chapter := &model.Chapter{
+		ID:     fmt.Sprintf("T%d", rand.Intn(100)),
+		Name:   input.Name,
+		Course: course,
+	}
+
+	r.Chapters = append(r.Chapters, chapter)
+	return chapter, nil
 }
 
 // Categories is the resolver for the categories field.
